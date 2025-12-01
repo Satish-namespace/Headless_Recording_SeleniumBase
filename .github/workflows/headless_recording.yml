@@ -10,17 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
 
-      # Install dependencies and SeleniumBase
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -28,14 +25,14 @@ jobs:
           pip install -r requirements.txt
           sbase install chromedriver
 
-      # Run SeleniumBase tests with video recording (handled by conftest.py)
-      - name: Run SeleniumBase tests
+      - name: Run SeleniumBase tests with video
         run: |
-          pytest tests/
+          mkdir -p saved_videos
+          pytest tests/ --video=on --video-dir=saved_videos
 
-      # Upload videos as artifacts
       - name: Upload test videos
         uses: actions/upload-artifact@v4
         with:
           name: seleniumbase-videos
           path: saved_videos/
+
