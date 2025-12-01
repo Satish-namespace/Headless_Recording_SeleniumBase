@@ -28,7 +28,7 @@ jobs:
       - name: Run SeleniumBase tests with video
         run: |
           mkdir -p saved_videos
-          pytest tests/ --video=on --video-dir=saved_videos
+          pytest tests/ 
 
       - name: Upload test videos
         uses: actions/upload-artifact@v4
