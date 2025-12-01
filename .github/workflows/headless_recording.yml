@@ -27,10 +27,10 @@ jobs:
 
       - name: Run SeleniumBase tests with video
         run: |
-          mkdir -p saved_videos
           pytest tests/ 
 
       - name: Upload test videos
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: seleniumbase-videos
