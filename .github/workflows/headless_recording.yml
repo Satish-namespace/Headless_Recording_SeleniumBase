@@ -1,0 +1,41 @@
+name: SeleniumBase Tests with Video
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  seleniumbase:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout the repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2️⃣ Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      # 3️⃣ Install dependencies and SeleniumBase
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb ffmpeg
+          pip install -r requirements.txt
+          sbase install chromedriver
+
+      # 4️⃣ Run SeleniumBase tests with video recording (handled by conftest.py)
+      - name: Run SeleniumBase tests
+        run: |
+          pytest tests/
+
+      # 5️⃣ Upload videos as artifacts
+      - name: Upload test videos
+        uses: actions/upload-artifact@v3
+        with:
+          name: seleniumbase-videos
+          path: saved_videos/
