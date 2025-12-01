@@ -1,0 +1,1 @@
+# Recorded vidoes will get saved in this directory.
